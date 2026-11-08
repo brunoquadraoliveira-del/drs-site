@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#013539">
+  <meta name="description" content="Explore os registros de campo da DRS por período, serviço e município em uma linha do tempo interativa com mapa.">
+  <title>Projetos e linha do tempo — DRS</title>
+  <link rel="icon" type="image/png" href="assets/logo-drs.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="DRS Consultoria e Tecnologia Florestal">
+  <meta property="og:title" content="Projetos e linha do tempo — DRS">
+  <meta property="og:description" content="Explore trabalhos da DRS por ano, serviço e município em uma linha do tempo interativa com mapa do Brasil.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Projetos e linha do tempo — DRS">
+  <meta name="twitter:description" content="Registros de campo DRS organizados por ano, serviço e município.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/timeline.css?v=20261017-1">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="tl-header">
+    <div class="tl-wrap tl-nav">
+      <a class="tl-brand" href="index.html" aria-label="DRS, página inicial">
+        <img src="assets/logo-drs.png" alt="">
+        <span><strong>DRS</strong><small>CONSULTORIA E TECNOLOGIA FLORESTAL</small></span>
+      </a>
+      <button class="tl-menu" type="button" aria-label="Abrir menu" aria-controls="tl-navigation" aria-expanded="false">☰</button>
+      <nav class="tl-links" id="tl-navigation" aria-label="Navegação principal">
+        <a href="index.html#servicos">Serviços</a>
+        <a href="index.html#metodo">Como ajudamos</a>
+        <a href="index.html#historia">Nossa história</a>
+        <a href="projetos.html" aria-current="page">Projetos</a>
+        <a href="index.html#contato">Contato</a>
+        <a class="tl-cta" href="https://wa.me/554991785328" target="_blank" rel="noreferrer">Solicitar orçamento <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="tl-hero">
+      <div class="tl-wrap tl-hero-inner">
+        <div>
+          <div class="tl-eyebrow">DRS · trabalho de campo em perspectiva</div>
+          <h1>O trabalho em campo,<br><em>no mapa e no tempo.</em></h1>
+          <p class="tl-hero-copy">Explore os registros da DRS por ano, município e tipo de serviço. Cada publicação ganha contexto; o mapa mostra como a atuação se distribui pelo Brasil, com maior concentração no Sul.</p>
+        </div>
+        <div class="tl-hero-aside" aria-label="Resumo da linha do tempo">
+          <div class="tl-stat"><strong id="hero-post-count">—</strong><span>publicações do Instagram</span></div>
+          <div class="tl-stat"><strong id="hero-city-count">—</strong><span>municípios identificados</span></div>
+          <div class="tl-stat"><strong>2020—26</strong><span>período de registros</span></div>
+          <div class="tl-stat"><strong>Brasil</strong><span>com maior concentração no Sul</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tl-explorer" aria-labelledby="explorer-title">
+      <div class="tl-wrap">
+        <div class="tl-intro">
+          <div><div class="tl-eyebrow">Linha do tempo interativa</div><h2 id="explorer-title">Uma história que se entende de perto.</h2></div>
+          <p>Escolha um ano, explore os meses e selecione um município no mapa. Os cartões mostram os serviços e as imagens que acompanham cada registro.</p>
+        </div>
+
+        <div class="tl-console">
+          <div class="tl-console-head">
+            <div class="tl-control-row">
+              <div><strong class="tl-control-title">Percorra os registros</strong><span class="tl-control-hint" id="period-hint">Todos os anos e meses · ordem cronológica</span></div>
+              <button class="tl-play" id="play-timeline" type="button" aria-pressed="false"><span aria-hidden="true">▶</span> Percorrer anos</button>
+            </div>
+            <div class="tl-years" id="year-controls" role="group" aria-label="Filtrar linha do tempo por ano"></div>
+            <div class="tl-months" id="month-controls" role="group" aria-label="Filtrar linha do tempo por mês"></div>
+            <div class="tl-tools">
+              <label class="visually-hidden" for="record-search">Buscar serviço, espécie ou município</label>
+              <input class="tl-input" id="record-search" type="search" placeholder="Buscar município, serviço ou espécie">
+              <label class="visually-hidden" for="service-filter">Filtrar por serviço</label>
+              <select class="tl-select" id="service-filter"><option value="all">Todos os serviços</option></select>
+              <button class="tl-reset" id="clear-filters" type="button">Limpar filtros</button>
+            </div>
+          </div>
+
+          <div class="tl-summary">
+            <div class="tl-counts" aria-live="polite">
+              <span><strong id="visible-count">0</strong> registros neste recorte</span>
+              <span><strong id="visible-cities">0</strong> municípios no mapa</span>
+              <span><strong id="visible-states">0</strong> estados</span>
+            </div>
+            <div class="tl-selected-city" id="selected-city-wrap"><span id="selected-city-name"></span><button id="clear-city" type="button" aria-label="Remover filtro de município">×</button></div>
+          </div>
+
+          <div class="tl-content">
+            <div class="tl-map-column">
+              <div class="tl-map-heading"><div><strong>Onde os registros aparecem</strong><span>Brasil · aproxime para ver divisas municipais</span></div><div class="tl-map-actions"><button type="button" id="view-brazil">Brasil todo</button><button type="button" id="focus-hotspots">Focar concentrações</button></div></div>
+              <div class="tl-map" id="drs-map" aria-label="Mapa interativo do Brasil com municípios dos registros DRS destacados por intensidade"></div>
+              <p class="tl-map-base-warning" id="map-base-warning" role="status" aria-live="polite" hidden></p>
+              <div class="tl-map-legend"><span>Menos registros</span><span class="tl-gradient" aria-hidden="true"></span><span>Mais registros</span><i aria-hidden="true"></i><span>Municípios com mais registros</span></div>
+              <p class="tl-map-note">Aproxime o mapa para ver as divisas municipais oficiais; toque ou passe o cursor sobre uma área para identificar a cidade. O fundo cartográfico de ruas e localidades usa MapTiler Streets, com dados do OpenStreetMap e créditos exibidos no mapa. Os círculos mostram referências municipais aproximadas, não propriedades ou talhões; a intensidade representa registros publicados, não contratos nem área atendida. Limites: <a href="https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais/15774-malhas" target="_blank" rel="noreferrer">IBGE — Malha Municipal Digital</a> · biblioteca: <a href="https://github.com/Leaflet/Leaflet/blob/main/LICENSE" target="_blank" rel="noreferrer">Leaflet — licença BSD 2-Clause</a>.</p>
+              <p class="tl-map-warning" id="map-scope-note"></p>
+              <div class="tl-location-heading"><strong>Municípios neste recorte</strong><span id="location-count">0 municípios</span></div>
+              <div class="tl-location-list" id="location-shortcuts" aria-label="Filtrar linha do tempo por município com registros neste recorte"></div>
+            </div>
+            <div class="tl-results">
+              <div class="tl-results-head"><h3 id="results-title">Todos os registros</h3><span id="results-range"></span></div>
+              <div class="tl-cards" id="timeline-cards" aria-live="polite"></div>
+              <button class="tl-more" id="load-more" type="button" hidden>Carregar mais registros</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="tl-dialog" id="record-dialog" aria-labelledby="dialog-title">
+    <div class="tl-dialog-inner" id="dialog-content"></div>
+  </dialog>
+
+  <footer class="tl-page-footer">
+    <div class="tl-wrap tl-footer-inner">
+      <a class="tl-footer-brand" href="index.html"><img src="assets/logo-drs.png" alt=""><span><strong>DRS</strong><small>CONSULTORIA E TECNOLOGIA FLORESTAL</small></span></a>
+      <span>Experiência de campo · tecnologia · precisão dos dados</span>
+      <a href="index.html#contato">Fale com a DRS ↗</a>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="assets/timeline-data.js?v=20261017-1"></script>
+  <script src="assets/map-config.js?v=20261022-1"></script>
+  <script src="assets/timeline.js?v=20261017-1" defer></script>
+</body>
+</html>

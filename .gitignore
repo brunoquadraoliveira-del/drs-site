@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node and deployment tooling
+node_modules/
+.vercel/
+
+# Local secrets and machine-specific files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+
+# Internal source material and generated delivery archives
+/documentacao-interna/
+/linha-do-tempo-instagram/
+/scripts/
+/drs-site-hostinger.zip
+/drs-site-para-revisao-marcos-*.zip
